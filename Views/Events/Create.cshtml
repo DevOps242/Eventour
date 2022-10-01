@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create a new Event</h1>
 
 <h4>Event</h4>
 <hr />
@@ -22,19 +22,79 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
+
+            @*<div class="form-group">
+            <label asp-for="EventDetailId" class="control-label"></label>
+            <select asp-for="EventDetailId" class="form-control" asp-items="ViewBag.EventDetailId"></select>
+        </div>*@
+
+            @*Handle the category tags*@
             <div class="form-group">
-                <label asp-for="EventDetailId" class="control-label"></label>
-                <select asp-for="EventDetailId" class ="form-control" asp-items="ViewBag.EventDetailId"></select>
+                <label asp-for="EventDetail.CategoryId" class="control-label"></label>
+                <select asp-for="EventDetail.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
+
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <label asp-for="EventDetail.Price" class="control-label"></label>
+                <input asp-for="EventDetail.Price" class="form-control" />
+                <span asp-validation-for="EventDetail.Price" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="EventDetail.EventVenue" class="control-label">Event Type</label>
+                <select asp-for="EventDetail.EventVenue" class="form-control" asp-items="ViewBag.EventVenueType">
+                    <option value=0 selected>Remote</option>
+                    <option value=1>Hybrid</option>
+                    <option value=2>In-Person</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventDetail.EventVenue.Address" class="control-label"></label>
+                <input asp-for="EventDetail.EventVenue.Address" class="form-control" />
+                <span asp-validation-for="EventDetail.EventVenue.Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventDetail.EventVenue.City" class="control-label"></label>
+                <input asp-for="EventDetail.EventVenue.City" class="form-control" />
+                <span asp-validation-for="EventDetail.EventVenue.City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventDetail.EventVenue.State" class="control-label"></label>
+                <input asp-for="EventDetail.EventVenue.State" class="form-control" />
+                <span asp-validation-for="EventDetail.EventVenue.State" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventDetail.EventVenue.Country" class="control-label"></label>
+                <input asp-for="EventDetail.EventVenue.Country" class="form-control" />
+                <span asp-validation-for="EventDetail.EventVenue.Country" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventDetail.EventVenue.Zip" class="control-label"></label>
+                <input asp-for="EventDetail.EventVenue.Zip" class="form-control" />
+                <span asp-validation-for="EventDetail.EventVenue.Zip" class="text-danger"></span>
+            </div>
+
+
+            @*Pull the user from the action token*@
+            @*<div class="form-group">
+            <label asp-for="UserId" class="control-label"></label>
+            <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+        </div>*@
+
+
             <div class="form-group">
                 <label asp-for="createdOn" class="control-label"></label>
                 <input asp-for="createdOn" class="form-control" />
                 <span asp-validation-for="createdOn" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

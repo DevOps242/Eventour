@@ -56,6 +56,11 @@ namespace COMP2084_Project_Eventour.Controllers
         public IActionResult Create()
         {
             ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId");
+
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
+
+            ViewData["EventVenueType"] = new SelectList(_context.EventVenues, "Type");
+
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
             return View();
         }
