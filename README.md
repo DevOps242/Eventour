@@ -17,12 +17,12 @@
 - [x] Build the database migrations
 - [x] Connect to Database
 - [ ] Make CRUD for the application
-- [ ] Develop the UI/UX
+- [ ] Develop the UI/UX 
 - [ ] Deploy to Azure Cloud
 - [ ] Build unit tests
 
 
-### Project URL:
-> [Coming Soon] (https://www.github.com)
+### Project URL and Author:
+> [Coming Soon](https://www.github.com)
 
-> Author -- Akeem Palmer
+> Author -- [Akeem Palmer](https://www.github.com/DevOps242)
