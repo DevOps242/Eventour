@@ -14,12 +14,14 @@ namespace COMP2084_Project_Eventour.Models
         [Required]
         public string? Description { get; set; }
 
-        public enum Status
-        {
-            // Add items
-            Active,
-            Inactive
-        }
+        //public enum EventStatus
+        //{
+        //    // Add items
+        //    Active,
+        //    Inactive
+        //}
+
+        //public EventStatus Status { get; set; }
 
         //FK for Event Details
         public int EventDetailId { get; set; }

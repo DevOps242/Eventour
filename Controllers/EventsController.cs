@@ -57,19 +57,12 @@ namespace COMP2084_Project_Eventour.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-
-            // Dont need this
-            //ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId");
-
            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
-
            //public List<EventVenue> EventTypes { get; set; } = new List<EventVenue>
            // {
               
                
            // };
-
-        ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
 
             return View();
         }
@@ -80,13 +73,11 @@ namespace COMP2084_Project_Eventour.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind(
-            "EventId,Title,Description, Type,EventDetailId,UserId,createdOn"
+            "EventId,Title, Description,EventDetailId,UserId,createdOn"
             )] Event @event)
         {
-
             try
             {
-
                 // Create the Venue into the database and return the ID.
                 //string VenueType = @event.EventDetail.EventVenue.Type;
                 string Address = HttpContext.Request.Form["EventDetail.EventVenue.Address"];
@@ -108,6 +99,16 @@ namespace COMP2084_Project_Eventour.Controllers
                 // Builds the event details and returns it ID.
                 var EventDetailId = new EventDetailsController(_context).CreateDetail(Price, StartDate, EndDate, Photo, CategoryId, EventVenueId);
 
+                @event.EventDetailId = EventDetailId;
+                @event.UserId = 1;
+                @event.createdOn = DateTime.Now;
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(@event);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch (Exception e)
             {
@@ -115,24 +116,8 @@ namespace COMP2084_Project_Eventour.Controllers
             }
 
 
-            //public async Task<IActionResult> CreateVenue([Bind("EventVenueId,Country,City,State,Address,Zip")] EventVenue eventVenue)
-
-            //// Create object of details controller
-            //EventDetailsController DetailsController = new EventDetailsController(_context);
-
-            //// Call the create method to update the database
-            //var EventDetailId = DetailsController.Create();
-
-
-
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(@event);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId", @event.EventDetailId);
-            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", @event.UserId);
+            ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId", @event.EventDetailId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", @event.UserId);
             return View(@event);
         }
 
