@@ -72,6 +72,41 @@ namespace COMP2084_Project_Eventour.Controllers
             return View(eventDetail);
         }
 
+
+        [ValidateAntiForgeryToken]
+        public int CreateDetail(double Price, DateTime StartDate, DateTime EndDate, string Photo, int CategoryId, int EventVenueId)
+        {
+            try
+            {
+                EventDetail eventDetail = new EventDetail();
+
+                eventDetail.Price = Price;
+                eventDetail.Photo = Photo;
+                eventDetail.StartDate = StartDate;
+                eventDetail.EndDate = EndDate;
+                eventDetail.CategoryId = CategoryId;
+                eventDetail.EventVenueId = EventVenueId;
+
+                if(ModelState.IsValid)
+                {
+                    _context.Add(eventDetail);
+                    _context.SaveChanges();
+
+                    return eventDetail.EventDetailId;
+                }
+
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+           
+
+            return 0;
+        }
+
+
+
         // GET: EventDetails/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

@@ -80,12 +80,14 @@ namespace COMP2084_Project_Eventour.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind(
-            "EventId,Title,Description,Price, Type,EventDetailId, StartDate, EndDate, Photo,UserId,createdOn"
+            "EventId,Title,Description, Type,EventDetailId,UserId,createdOn"
             )] Event @event)
         {
 
             try
             {
+
+                // Create the Venue into the database and return the ID.
                 //string VenueType = @event.EventDetail.EventVenue.Type;
                 string Address = HttpContext.Request.Form["EventDetail.EventVenue.Address"];
                 string City = HttpContext.Request.Form["EventDetail.EventVenue.City"];
@@ -96,15 +98,22 @@ namespace COMP2084_Project_Eventour.Controllers
                 // need to get event detail id first then add to event.
                 var EventVenueId = new EventVenuesController(_context).CreateVenue(Address, City, State, Country, Zip);
 
+                // Create the Details into the database and return the ID.
+                double Price = Double.Parse(HttpContext.Request.Form["EventDetail.Price"]);
+                DateTime StartDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.StartDate"]);
+                DateTime EndDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.EndDate"]);
+                string Photo = HttpContext.Request.Form["EventDetail.Photo"];
+                int CategoryId = int.Parse(HttpContext.Request.Form["EventDetail.CategoryId"]);
 
+                // Builds the event details and returns it ID.
+                var EventDetailId = new EventDetailsController(_context).CreateDetail(Price, StartDate, EndDate, Photo, CategoryId, EventVenueId);
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-           
-            
-           
+
 
             //public async Task<IActionResult> CreateVenue([Bind("EventVenueId,Country,City,State,Address,Zip")] EventVenue eventVenue)
 

@@ -71,34 +71,44 @@ namespace COMP2084_Project_Eventour.Controllers
             return View(eventVenue);
         }
 
-
+        /**
+         * This method adds an Event Venue then return the ID for that venue added.
+         * **/
         [ValidateAntiForgeryToken]
         public int CreateVenue(string? Address, string? City, string? State, string? Country, string? Zip)
         {
-            EventVenue eventVenue = new EventVenue();
-
-            //eventVenue.EventType = EventVenue.EventType.Remote;
-            //eventVenue.Type = 0;
-            eventVenue.Address = Address;
-            eventVenue.City = City;
-            eventVenue.State = State;
-            eventVenue.Country = Country;
-            eventVenue.Zip = Zip;
-
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(eventVenue);
-                _context.SaveChangesAsync();
+                EventVenue eventVenue = new EventVenue();
 
+                //eventVenue.EventType = EventVenue.EventType.Remote;
+                //eventVenue.Type = 0;
+                eventVenue.Address = Address;
+                eventVenue.City = City;
+                eventVenue.State = State;
+                eventVenue.Country = Country;
+                eventVenue.Zip = Zip;
 
-                // Get the last id.
+                if (ModelState.IsValid)
+                {
+                    _context.Add(eventVenue);
+                    _context.SaveChanges();
+                    //_context.SaveChangesAsync();
 
-                int eventID = 1;
-                return eventID;
+                    // Get the last id from the database and return it
+                    return eventVenue.EventVenueId;
+                }
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
+             
 
             return 0;
         }
+
+
 
         // GET: EventVenues/Edit/5
         public async Task<IActionResult> Edit(int? id)
