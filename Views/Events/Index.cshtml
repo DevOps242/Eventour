@@ -1,59 +1,43 @@
-@model IEnumerable<COMP2084_Project_Eventour.Models.Event>
+@model List<COMP2084_Project_Eventour.Models.Event>
 
 @{
     ViewData["Title"] = "Events";
 }
 
 <h1>Index</h1>
+<div class="container">
+    <div class="container mb-3 mt-3 d-flex justify-content-end">
+        <a asp-action="Create">
+            <button class="btn btn-primary">Create New </button>
+        </a>
+    </div>
+   
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.EventDetail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.createdOn)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.EventDetail.EventDetailId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.createdOn)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EventId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="../Shared/Images/placeholder.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.Description).</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Category: @Html.DisplayFor(modelItem => item.EventDetail.Category.Name)</li>
+                            <li class="list-group-item">$@Html.DisplayFor(modelItem => item.EventDetail.Price) </li>
+                            <li class="list-group-item">Start Time: @Html.DisplayFor(modelItem => item.EventDetail.StartDate)</li>
+                        </ul>
+                        <div class="card-footer">
+                            <a asp-action="Edit" asp-route-id="@item.EventId" class="btn btn-primary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.EventId" class="btn btn-info">Read More</a>
+                            <a asp-action="Delete" asp-route-id="@item.EventId" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

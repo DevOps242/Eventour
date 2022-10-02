@@ -21,14 +21,36 @@ namespace COMP2084_Project_Eventour.Controllers
             _context = context;
         }
 
+
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            //var applicationDbContext = _context.Events.Include(@ => @.EventDetail).Include(@ => @.User);
-            //return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Events.Include(
+            //    @ => @.EventDetail).Include(@ => @.User
+            //    );
 
-            return View();
+
+            //var applicationDbContext = from e in _context.Events join ed in _context.EventDetails on e.EventDetailId equals ed.EventDetailId join ev in _context.EventVenues on ed.EventVenueId equals ev.EventVenueId select new
+            //{
+            //    Title = e.Title,
+            //    Description = e.Description,
+            //    Address = ev.Address,
+            //    CreatedOn = e.createdOn,
+
+            //};
+
+            // This works and joins the tables.
+            var applicationDbContext = _context.Events
+                .Include(x => x.User)
+                .Include(x => x.EventDetail)
+                .ThenInclude(x => x.Category)
+                .Include(x => x.EventDetail)
+                .ThenInclude(x => x.EventVenue);
+                
+
+            return View(await applicationDbContext.ToListAsync());
         }
+
 
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -60,8 +82,6 @@ namespace COMP2084_Project_Eventour.Controllers
            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
            //public List<EventVenue> EventTypes { get; set; } = new List<EventVenue>
            // {
-              
-               
            // };
 
             return View();
