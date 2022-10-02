@@ -12,7 +12,9 @@ namespace COMP2084_Project_Eventour.Models
         [Range(0, 10000, ErrorMessage = "Price of an event can be 0 (free) - 10,000")]
         public double Price { get; set; }
 
-        public DateTime eventDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string? Photo { get; set; }
 
         [Required]
         // FK for Category item
@@ -24,9 +26,8 @@ namespace COMP2084_Project_Eventour.Models
         public int EventVenueId { get; set; }
         public EventVenue? EventVenue { get; set; }
 
-        // add nullable child ref to Product model
+        // add nullable child ref to Event model
         public List<Event>? Events { get; set; }
-
 
         
     }

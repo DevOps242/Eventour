@@ -9,6 +9,8 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -18,12 +20,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.EventDetail)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.createdOn)
             </th>
@@ -39,12 +41,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.EventDetail.EventDetailId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Email)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.createdOn)
             </td>
