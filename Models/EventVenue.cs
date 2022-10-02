@@ -9,26 +9,27 @@ namespace COMP2084_Project_Eventour.Models
 
         [Required]
         public string? Country { get; set; }
-        
+
         public string? City { get; set; }
 
         [Required]
         public string? State { get; set; }
-        
+
         public string? Address { get; set; }
 
         public string? Zip { get; set; }
 
-        public enum Type{
-            // items of enum
-            Remote,
-            Hybrid,
-            InPerson
-        }
+        //public enum EventType {
+        //    // items of enum
+        //    Remote,
+        //    Hybrid,
+        //    InPerson
+        //}
+
+        //public EventType Type { get; set; }
 
         // add nullable child ref to EventDetail model
         public List<EventDetail>? EventDetails { get; set; }
-
 
 
     }

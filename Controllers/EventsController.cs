@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using COMP2084_Project_Eventour.Data;
 using COMP2084_Project_Eventour.Models;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 
 namespace COMP2084_Project_Eventour.Controllers
 {
@@ -36,14 +38,14 @@ namespace COMP2084_Project_Eventour.Controllers
                 return NotFound();
             }
 
-            // *********NEED TO FIX*************
             //var @event = await _context.Events
             //    .Include(@ => @.EventDetail)
             //    .Include(@ => @.User)
             //    .FirstOrDefaultAsync(m => m.EventId == id);
 
             var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.EventId == id);
+               .FirstOrDefaultAsync(m => m.EventId == id);
+
             if (@event == null)
             {
                 return NotFound();
@@ -55,13 +57,20 @@ namespace COMP2084_Project_Eventour.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId");
 
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
+            // Dont need this
+            //ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId");
 
-            ViewData["EventVenueType"] = new SelectList(_context.EventVenues, "Type");
+           ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
 
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
+           //public List<EventVenue> EventTypes { get; set; } = new List<EventVenue>
+           // {
+              
+               
+           // };
+
+        ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email");
+
             return View();
         }
 
@@ -70,16 +79,51 @@ namespace COMP2084_Project_Eventour.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,Title,Description,EventDetailId,UserId,createdOn")] Event @event)
+        public async Task<IActionResult> Create([Bind(
+            "EventId,Title,Description,Price, Type,EventDetailId, StartDate, EndDate, Photo,UserId,createdOn"
+            )] Event @event)
         {
-            if (ModelState.IsValid)
+
+            try
             {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //string VenueType = @event.EventDetail.EventVenue.Type;
+                string Address = HttpContext.Request.Form["EventDetail.EventVenue.Address"];
+                string City = HttpContext.Request.Form["EventDetail.EventVenue.City"];
+                string State = HttpContext.Request.Form["EventDetail.EventVenue.State"];
+                string Country = HttpContext.Request.Form["EventDetail.EventVenue.Country"];
+                string Zip = HttpContext.Request.Form["EventDetail.EventVenue.Zip"];
+
+                // need to get event detail id first then add to event.
+                var EventVenueId = new EventVenuesController(_context).CreateVenue(Address, City, State, Country, Zip);
+
+
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
-            ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId", @event.EventDetailId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", @event.UserId);
+           
+            
+           
+
+            //public async Task<IActionResult> CreateVenue([Bind("EventVenueId,Country,City,State,Address,Zip")] EventVenue eventVenue)
+
+            //// Create object of details controller
+            //EventDetailsController DetailsController = new EventDetailsController(_context);
+
+            //// Call the create method to update the database
+            //var EventDetailId = DetailsController.Create();
+
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(@event);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId", @event.EventDetailId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", @event.UserId);
             return View(@event);
         }
 
@@ -146,7 +190,6 @@ namespace COMP2084_Project_Eventour.Controllers
                 return NotFound();
             }
 
-            // *********NEED TO FIX*************
             //var @event = await _context.Events
             //    .Include(@ => @.EventDetail)
             //    .Include(@ => @.User)
