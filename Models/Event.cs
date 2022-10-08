@@ -14,6 +14,8 @@ namespace COMP2084_Project_Eventour.Models
         [Required]
         public string? Description { get; set; }
 
+        public string? Photo { get; set; }
+
         //public enum EventStatus
         //{
         //    // Add items

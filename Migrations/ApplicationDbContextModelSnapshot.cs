@@ -30,6 +30,9 @@ namespace COMP2084_Project_Eventour.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -58,6 +61,9 @@ namespace COMP2084_Project_Eventour.Migrations
 
                     b.Property<int>("EventDetailId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -95,9 +101,6 @@ namespace COMP2084_Project_Eventour.Migrations
 
                     b.Property<int>("EventVenueId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");

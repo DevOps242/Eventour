@@ -19,14 +19,15 @@ namespace COMP2084_Project_Eventour.Models
 
         public string? Zip { get; set; }
 
-        //public enum EventType {
-        //    // items of enum
-        //    Remote,
-        //    Hybrid,
-        //    InPerson
-        //}
+        public EventType Type { get; set; }
 
-        //public EventType Type { get; set; }
+        public enum EventType
+        {
+            // items of enum
+            Remote,
+            Hybrid,
+            InPerson
+        }
 
         // add nullable child ref to EventDetail model
         public List<EventDetail>? EventDetails { get; set; }

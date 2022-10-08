@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2084_Project_Eventour.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221001194351_Initial Database.")]
-    partial class InitialDatabase
+    [Migration("20221008012024_Inital Database")]
+    partial class InitalDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,10 +32,13 @@ namespace COMP2084_Project_Eventour.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
 
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -60,6 +63,9 @@ namespace COMP2084_Project_Eventour.Migrations
 
                     b.Property<int>("EventDetailId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -92,13 +98,19 @@ namespace COMP2084_Project_Eventour.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("EventVenueId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("eventDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("EventDetailId");
@@ -131,6 +143,9 @@ namespace COMP2084_Project_Eventour.Migrations
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("Zip")
                         .HasColumnType("nvarchar(max)");

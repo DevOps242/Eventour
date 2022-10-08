@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COMP2084_Project_Eventour.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221001232803_update categories description text limit")]
-    partial class updatecategoriesdescriptiontextlimit
+    [Migration("20221008012229_remove photo form detail model")]
+    partial class removephotoformdetailmodel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace COMP2084_Project_Eventour.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -60,6 +63,9 @@ namespace COMP2084_Project_Eventour.Migrations
 
                     b.Property<int>("EventDetailId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -92,13 +98,16 @@ namespace COMP2084_Project_Eventour.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("EventVenueId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("eventDate")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("EventDetailId");
@@ -131,6 +140,9 @@ namespace COMP2084_Project_Eventour.Migrations
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("Zip")
                         .HasColumnType("nvarchar(max)");

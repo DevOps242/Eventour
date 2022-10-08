@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COMP2084_Project_Eventour.Models
 {
@@ -14,8 +15,7 @@ namespace COMP2084_Project_Eventour.Models
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string? Photo { get; set; }
-
+        
         [Required]
         // FK for Category item
         public int CategoryId { get; set; }
@@ -29,7 +29,6 @@ namespace COMP2084_Project_Eventour.Models
         // add nullable child ref to Event model
         public List<Event>? Events { get; set; }
 
-        
     }
 }
 

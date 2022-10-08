@@ -14,6 +14,9 @@ namespace COMP2084_Project_Eventour.Models
         [MaxLength(255)]
         public string? Description { get; set; }
 
+
+        public string? Color { get; set; }
+
         // add nullable child ref to Event Detail model
         public List<EventDetail>? EventDetails { get; set; }
 
