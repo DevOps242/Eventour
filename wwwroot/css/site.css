@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.card-img-top {
+    height: 225px
+    
+}
