@@ -26,6 +26,9 @@
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
                     Edit | Detail | Delete
                 </th>
             </tr>
@@ -41,6 +44,11 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
+                        <span class="badge rounded-pill bg-light text-dark" style="border: 3px solid @Html.DisplayFor(modelItem => item.Color);">
+                            @Html.DisplayFor(modelItem => item.Color)
+                        </span>
+                    </td>
+                    <td>
                         <div class="container">
                             <a asp-action="Edit" asp-route-id="@item.CategoryId">
                                 <i class="fa-solid fa-pen-to-square category_icon"></i>
@@ -51,7 +59,7 @@
                                 <i class="fa-solid fa-trash category_icon"></i>
                             </a>
                         </div>
-                       
+
                     </td>
                 </tr>
             }

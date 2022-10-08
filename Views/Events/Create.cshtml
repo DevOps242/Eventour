@@ -11,7 +11,7 @@
     @*<hr />*@
     <div class="container mb-3 mt-3 text-center">
 
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             @*Pull the user from the action token*@
             <input asp-for="UserId" hidden value="1" />
 
@@ -39,11 +39,11 @@
                     </div>
 
                     <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EventVenue" class="control-label float-sm-start">Venue Type</label>
-                        <select asp-for="EventDetail.EventVenue" class="form-control" asp-items="ViewBag.CategoryId">
-                            @*<option value=0 selected>Remote</option>
+                        <label asp-for="EventDetail.EventVenue.Type" class="control-label float-sm-start">Venue Type</label>
+                        <select asp-for="EventDetail.EventVenue.Type" class="form-control" >
+                            <option value=0 selected>Remote</option>
                             <option value=1>Hybrid</option>
-                            <option value=2>In-Person</option>*@
+                            <option value=2>In-Person</option>
                         </select>
                     </div>
                 </div>
@@ -105,9 +105,9 @@
 
                 <div class="col-md-4">
                     <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.Photo" class="control-label  float-sm-start">Image</label>
-                        <input type="file" accept="jpg" asp-for="EventDetail.Photo" class="form-control" />
-                        <span asp-validation-for="EventDetail.Photo" class="text-danger"></span>
+                        <label asp-for="Photo" class="control-label  float-sm-start"></label>
+                        <input type="file" asp-for="Photo" class="form-control" />
+                        <span asp-validation-for="Photo" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group mb-3 mt-3">
