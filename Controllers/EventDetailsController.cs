@@ -49,6 +49,7 @@ namespace COMP2084_Project_Eventour.Controllers
         // GET: EventDetails/Create
         public IActionResult Create()
         {
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Description");
             ViewData["EventVenueId"] = new SelectList(_context.EventVenues, "EventVenueId", "Country");
             return View();
@@ -59,7 +60,7 @@ namespace COMP2084_Project_Eventour.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventDetailId,Price,StartDate,EndDate,Photo,CategoryId,EventVenueId")] EventDetail eventDetail)
+        public async Task<IActionResult> Create([Bind("EventDetailId,Price,StartDate,EndDate,CategoryId,EventVenueId")] EventDetail eventDetail)
         {
             if (ModelState.IsValid)
             {
@@ -74,14 +75,13 @@ namespace COMP2084_Project_Eventour.Controllers
 
 
         [ValidateAntiForgeryToken]
-        public int CreateDetail(double Price, DateTime StartDate, DateTime EndDate, string Photo, int CategoryId, int EventVenueId)
+        public int CreateDetail(double Price, DateTime StartDate, DateTime EndDate, int CategoryId, int EventVenueId)
         {
             try
             {
                 EventDetail eventDetail = new EventDetail();
 
                 eventDetail.Price = Price;
-                eventDetail.Photo = Photo;
                 eventDetail.StartDate = StartDate;
                 eventDetail.EndDate = EndDate;
                 eventDetail.CategoryId = CategoryId;
@@ -94,7 +94,6 @@ namespace COMP2084_Project_Eventour.Controllers
 
                     return eventDetail.EventDetailId;
                 }
-
 
             } catch (Exception e)
             {

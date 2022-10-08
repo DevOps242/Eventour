@@ -56,7 +56,7 @@ namespace COMP2084_Project_Eventour.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventVenueId,Country,City,State,Address,Zip")] EventVenue eventVenue)
+        public async Task<IActionResult> Create([Bind("EventVenueId,Type,Country,City,State,Address,Zip")] EventVenue eventVenue)
         {
             if (ModelState.IsValid)
             {
@@ -75,14 +75,14 @@ namespace COMP2084_Project_Eventour.Controllers
          * This method adds an Event Venue then return the ID for that venue added.
          * **/
         [ValidateAntiForgeryToken]
-        public int CreateVenue(string? Address, string? City, string? State, string? Country, string? Zip)
+        public int CreateVenue(int eventTypeVal, string? Address, string? City, string? State, string? Country, string? Zip)
         {
             try
             {
                 EventVenue eventVenue = new EventVenue();
 
                 //eventVenue.EventType = EventVenue.EventType.Remote;
-                //eventVenue.Type = 0;
+                eventVenue.Type = (EventVenue.EventType)eventTypeVal;
                 eventVenue.Address = Address;
                 eventVenue.City = City;
                 eventVenue.State = State;

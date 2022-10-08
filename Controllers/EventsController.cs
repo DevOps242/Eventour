@@ -93,48 +93,60 @@ namespace COMP2084_Project_Eventour.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind(
-            "EventId,Title, Description,EventDetailId,UserId,createdOn"
-            )] Event @event)
+            "EventId,Title, Description,EventDetailId, UserId, EventDetail.Photo"
+            )] Event @event, IFormFile? Photo)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                // Create the Venue into the database and return the ID.
-                //string VenueType = @event.EventDetail.EventVenue.Type;
-                string Address = HttpContext.Request.Form["EventDetail.EventVenue.Address"];
-                string City = HttpContext.Request.Form["EventDetail.EventVenue.City"];
-                string State = HttpContext.Request.Form["EventDetail.EventVenue.State"];
-                string Country = HttpContext.Request.Form["EventDetail.EventVenue.Country"];
-                string Zip = HttpContext.Request.Form["EventDetail.EventVenue.Zip"];
-
-                // need to get event detail id first then add to event.
-                var EventVenueId = new EventVenuesController(_context).CreateVenue(Address, City, State, Country, Zip);
-
-                // Create the Details into the database and return the ID.
-                double Price = Double.Parse(HttpContext.Request.Form["EventDetail.Price"]);
-                DateTime StartDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.StartDate"]);
-                DateTime EndDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.EndDate"]);
-                string Photo = HttpContext.Request.Form["EventDetail.Photo"];
-                int CategoryId = int.Parse(HttpContext.Request.Form["EventDetail.CategoryId"]);
-
-                // Builds the event details and returns it ID.
-                var EventDetailId = new EventDetailsController(_context).CreateDetail(Price, StartDate, EndDate, Photo, CategoryId, EventVenueId);
-
-                @event.EventDetailId = EventDetailId;
-                @event.UserId = 1;
-                @event.createdOn = DateTime.Now;
-
-                if (ModelState.IsValid)
+                try
                 {
+                
+                    // Create the Venue into the database and return the ID.
+                    int eventType = int.Parse(HttpContext.Request.Form["EventDetail.EventVenue.Type"]);
+                    string Address = HttpContext.Request.Form["EventDetail.EventVenue.Address"];
+                    string City = HttpContext.Request.Form["EventDetail.EventVenue.City"];
+                    string State = HttpContext.Request.Form["EventDetail.EventVenue.State"];
+                    string Country = HttpContext.Request.Form["EventDetail.EventVenue.Country"];
+                    string Zip = HttpContext.Request.Form["EventDetail.EventVenue.Zip"];
+
+                    // need to get event detail id first then add to event.
+                    var EventVenueId = new EventVenuesController(_context).CreateVenue(eventType,Address, City, State, Country, Zip);
+
+                    // Create the Details into the database and return the ID.
+                    double Price = Double.Parse(HttpContext.Request.Form["EventDetail.Price"]);
+                    DateTime StartDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.StartDate"]);
+                    DateTime EndDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.EndDate"]);
+
+                
+                    int CategoryId = int.Parse(HttpContext.Request.Form["EventDetail.CategoryId"]);
+
+                    // Builds the event details and returns it ID.
+                    var EventDetailId = new EventDetailsController(_context).CreateDetail(Price, StartDate, EndDate, CategoryId, EventVenueId);
+
+                    // Need to get the photo and save it.
+                    string? PhotoName = "placeholder.png";
+
+                    if (Photo != null)
+                    {
+                        var fileName = UploadPhoto(Photo);
+                        PhotoName = fileName;
+                    }
+
+                    @event.EventDetailId = EventDetailId;
+                    @event.UserId = 1;
+                    @event.createdOn = DateTime.Now;
+                    @event.Photo = PhotoName;
+
                     _context.Add(@event);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }  
 
             ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId", @event.EventDetailId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", @event.UserId);
@@ -229,9 +241,19 @@ namespace COMP2084_Project_Eventour.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Events'  is null.");
             }
             var @event = await _context.Events.FindAsync(id);
+
             if (@event != null)
             {
+
+                // Gets the object by the ID for each instance in the database
+                EventDetail eventDetail = await _context.EventDetails.FindAsync(@event.EventDetailId);
+                EventVenue eventVenue = await _context.EventVenues.FindAsync(@event.EventDetail.EventVenueId);
+
+
+                // Removes them in a specific order so that the foreign keys doesn't throw exception error.
                 _context.Events.Remove(@event);
+                _context.EventDetails.Remove(eventDetail);
+                _context.EventVenues.Remove(eventVenue);
             }
             
             await _context.SaveChangesAsync();
@@ -242,5 +264,29 @@ namespace COMP2084_Project_Eventour.Controllers
         {
           return (_context.Events?.Any(e => e.EventId == id)).GetValueOrDefault();
         }
+
+        /**
+         * Code taken from class lecture..
+         */
+        private static string UploadPhoto(IFormFile Photo)
+        {
+            //get temp location of the uploaded file
+            var filePath = Path.GetTempFileName();
+
+            //create unique name to prevent overwrites
+            var fileName = Guid.NewGuid() + "-" + Photo.FileName;
+
+            // set destination path to wwwroot/assets/images/events/
+            var uploadPath = System.IO.Directory.GetCurrentDirectory() + "//wwwroot//assets//images//events//" + fileName;
+
+            // copy the file to the target dir
+            using (var stream = new FileStream(uploadPath, FileMode.Create))
+            {
+                Photo.CopyTo(stream);
+            }
+
+            return fileName;
+        }
+
     }
 }
