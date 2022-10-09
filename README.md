@@ -18,11 +18,11 @@
 - [x] Connect to Database
 - [x] Make CRUD for the application
 - [x] Develop the UI/UX 
-- [ ] Deploy to Azure Cloud
+- [x] Deploy to Azure Cloud
 - [ ] Build unit tests
 
 
 ### Project URL and Author:
-> [Coming Soon](https://www.github.com)
+> [Eventour Web APP](https://eventour.azurewebsites.net)
 
 > Author -- [Akeem Palmer](https://www.github.com/DevOps242)
