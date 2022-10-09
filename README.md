@@ -16,7 +16,7 @@
 - [x] Make Initial Repo
 - [x] Build the database migrations
 - [x] Connect to Database
-- [ ] Make CRUD for the application
+- [x] Make CRUD for the application
 - [ ] Develop the UI/UX 
 - [ ] Deploy to Azure Cloud
 - [ ] Build unit tests
