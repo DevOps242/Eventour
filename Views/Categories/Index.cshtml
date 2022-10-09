@@ -51,12 +51,12 @@
                     <td>
                         <div class="container">
                             <a asp-action="Edit" asp-route-id="@item.CategoryId">
-                                <i class="fa-solid fa-pen-to-square category_icon"></i>
+                                <i class="fa-solid fa-pen-to-square category_icon category_icon-edit"></i>
                             </a>
-                            <a asp-action="Details" asp-route-id="@item.CategoryId"><i class="fa-solid fa-circle-info category_icon"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.CategoryId"><i class="fa-solid fa-circle-info category_icon category_icon-detail"></i></a>
 
                             <a asp-action="Delete" asp-route-id="@item.CategoryId">
-                                <i class="fa-solid fa-trash category_icon"></i>
+                                <i class="fa-solid fa-trash category_icon category_icon-delete"></i>
                             </a>
                         </div>
 

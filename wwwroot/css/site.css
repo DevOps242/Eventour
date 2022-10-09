@@ -46,14 +46,16 @@ footer {
 }
 /*All theme End*/
 
-/*#303F9F - Dark Primary color
+/*
+#303F9F - Dark Primary color
 #C5CAE9 - Light Primary Color
 #3F51B5 - Priamry color
 #FFFFFF - text / icons
 #607D8B - Accent Color
 #212121 - Primary Text
 #757575 - Secondary Text
-#BDBDBD - Divder Color*/
+#BDBDBD - Divder Color
+*/
 
 
 /*Nav Bar Start*/
@@ -73,7 +75,8 @@ footer {
     color: #FFFFFF !important;
 }
 /*Nav Bar End*/
-/*Events Card*/
+
+/*Events Card START*/
 .card-img-top {
     height: 215px
 }
@@ -88,4 +91,48 @@ footer {
 .card-body-group {
     background-color: #C5CAE9;
     color: #212121;
+}
+/*Events Card END*/
+
+/*Categorys Icons Start*/
+.category_icon {
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.category_icon:hover {
+    opacity: .70;
+}
+.category_icon-edit {
+}
+
+.category_icon-detail {
+    color: #607D8B;
+}
+.category_icon-delete {
+    color: red;
+}
+
+/*Categorys Icons END*/
+
+/*Home Page Browse Section*/
+.category-cols {
+    background-image: linear-gradient(to right, #303F9F, #607D8B);
+    opacity: .9;
+    margin: 7px;
+    padding: 10px;
+    text-align: center;
+    color: #FFFFFF;
+    box-shadow: 5px 3px #607D8B;
+    background-color: #FFFFFF;
+}
+
+.category-cols:hover {
+    background-image: linear-gradient(to left, #607D8B, #C5CAE9);
+    margin: 7px;
+    padding: 10px;
+    text-align: center;
+    color: #FFFFFF;
 }

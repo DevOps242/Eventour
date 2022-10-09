@@ -1,12 +1,116 @@
-﻿@{
+﻿@model List<COMP2084_Project_Eventour.Models.Event>
+
+@{
     ViewData["Title"] = "Events Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Eventour</h1>
-    <p>Exploring your interest by controlling what you want to see.</p>
+<div class="container">
+
+    @*Dummy Categories*@
+    <div class="container">
+        <h4>Browse By Categories</h4>
+
+        <div class="container mb-3 mt-3">
+            <div class="row">
+                <div class="col category-cols">
+                    Construction
+                </div>
+                <div class="col category-cols">
+                    Technology
+                </div>
+                <div class="col category-cols">
+                    Health
+                </div>
+                <div class="col category-cols">
+                    Performing & Visual Arts
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col category-cols">
+                    Music
+                </div>
+                <div class="col category-cols">
+                    Travel & Outdoor
+                </div>
+                <div class="col category-cols">
+                    Food & Drink
+                </div>
+                <div class="col category-cols">
+                    Business
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 
-    
+    <div class="text-center">
+        <h3 class="display-6">Popular Events</h3>
+        <p>Exploring your interest by controlling what you want to see.</p>
+    </div>
+
+    <div class="container mt-3 mb-3">
+        <div class="row">
+            @if (@Model.Count() < 1)
+            {
+                <div class="container col-12">
+                    <h4>There are currently no events to show. Please create a new event.</h4>
+                </div>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                      
+                    <div class="col-4 mb-3 mt-3">
+                        <div class="container">
+                            <div class="card" style="width: 18rem;">
+                                <img src="assets/images/events/@Html.DisplayFor(modelItem => item.Photo)" class="card-img-top" alt="@Html.DisplayFor(modelItem => item.Title)">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">@Html.DisplayFor(modelItem => item.Title)</h5>
+                                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description).</p>
+                                </div>
+
+                                <ul class="list-group list-group-flush card-body-group">
+                                    <li class="list-group-item card-body-group">
+                                        Category
+                                        <span class="badge rounded-pill bg-light text-dark" style="border:3px solid @Html.DisplayFor(modelItem => item.EventDetail.Category.Color); ">@Html.DisplayFor(modelItem => item.EventDetail.Category.Name)</span> -
+                                        <span class="badge bg-dark rounded-pill">
+                                            @Html.DisplayFor(modelItem => item.EventDetail.EventVenue.Type)
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item card-body-group">
+                                        <span>
+                                            Price:
+                                        </span>
+                                        <span>
+                                            $@Html.DisplayFor(modelItem => item.EventDetail.Price)
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item card-body-group">
+                                        <span style="font-size:15px;">
+                                            Start Time: @Html.DisplayFor(modelItem => item.EventDetail.StartDate)
+                                        </span>
+                                        <span style="font-size:15px;">
+                                            End Time: @Html.DisplayFor(modelItem => item.EventDetail.EndDate)
+                                        </span>
+
+                                    </li>
+                                </ul>
+                                <div class="card-footer">
+                                    <div class="row text-center">
+                                        <div class="col-12">
+                                            <a asp-controller="Events" asp-action="Details" asp-route-id="@item.EventId" class="btn btn-success">Register</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
 </div>
-
