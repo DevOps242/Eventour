@@ -19,6 +19,10 @@ body {
  
 }
 
+h1 {
+    color: #212121;
+}
+
 a {
     text-decoration: none;
     color: #303F9F !important;
