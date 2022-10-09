@@ -1,4 +1,5 @@
-﻿html {
+﻿/*All theme Start*/
+html {
   font-size: 14px;
 }
 
@@ -15,10 +16,72 @@ html {
 
 body {
   margin-bottom: 60px;
+ 
 }
 
+a {
+    text-decoration: none;
+    color: #303F9F !important;
+}
 
+.btn {
+    color: #FFFFFF !important;
+}
+
+.btn-primary {
+    background-color: #303F9F !important;
+}
+
+.btn-primary:hover {
+    opacity: .80;
+}
+
+footer {
+    background-color: #C5CAE9;
+    color: #212121 !important;
+}
+/*All theme End*/
+
+/*#303F9F - Dark Primary color
+#C5CAE9 - Light Primary Color
+#3F51B5 - Priamry color
+#FFFFFF - text / icons
+#607D8B - Accent Color
+#212121 - Primary Text
+#757575 - Secondary Text
+#BDBDBD - Divder Color*/
+
+
+/*Nav Bar Start*/
+.navbar {
+    background-color: #303F9F !important;
+}
+
+.nav-link {
+    color: #FFFFFF !important;
+}
+
+.nav-link:hover {
+    color: #212121 !important;
+}
+
+.navbar-brand {
+    color: #FFFFFF !important;
+}
+/*Nav Bar End*/
+/*Events Card*/
 .card-img-top {
-    height: 225px
-    
+    height: 215px
+}
+
+.card {
+    border: 1px solid;
+    padding: 2px;
+    box-shadow: 5px 10px #607D8B;
+    background-color: #FFFFFF;
+    color: #303F9F;
+}
+.card-body-group {
+    background-color: #C5CAE9;
+    color: #212121;
 }

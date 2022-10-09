@@ -112,16 +112,12 @@
                         <label asp-for="Photo" class="control-label  float-sm-start"></label>
                         <input type="file" asp-for="Photo" class="form-control" />
                         <span asp-validation-for="Photo" class="text-danger"></span>
-                        @if (Model.Photo != null)
-                        {
-                            <img src="assets/images/events/@Model.Photo" alt="Event Photo" />
-                        }
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group mb-3 mt-3">
+                        <div class="form-group mb-3 mt-3"> Current Photo:
                             @if (Model.Photo != null)
                             {
-                                <img src="assets/images/events/@Model.Photo" alt="Event Photo" width="30" height="30" />
+                                <img src="/assets/images/events/@Model.Photo" alt="Event Photo" width="150" height="130" />
                             }
                         </div>
                     </div>
