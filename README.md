@@ -17,7 +17,7 @@
 - [x] Build the database migrations
 - [x] Connect to Database
 - [x] Make CRUD for the application
-- [ ] Develop the UI/UX 
+- [x] Develop the UI/UX 
 - [ ] Deploy to Azure Cloud
 - [ ] Build unit tests
 
