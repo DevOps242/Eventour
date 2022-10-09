@@ -108,6 +108,44 @@ namespace COMP2084_Project_Eventour.Controllers
             return 0;
         }
 
+        /**
+         * This method adds an Event Venue then return the ID for that venue added.
+         * **/
+        [ValidateAntiForgeryToken]
+        public int EditVenue(int venueID, int eventTypeVal, string? Address, string? City, string? State, string? Country, string? Zip)
+        {
+            try
+            {
+                EventVenue eventVenue = new EventVenue();
+
+                //eventVenue.EventType = EventVenue.EventType.Remote;
+                eventVenue.Type = (EventVenue.EventType)eventTypeVal;
+                eventVenue.Address = Address;
+                eventVenue.City = City;
+                eventVenue.State = State;
+                eventVenue.Country = Country;
+                eventVenue.Zip = Zip;
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(eventVenue);
+                    _context.SaveChanges();
+                    //_context.SaveChangesAsync();
+
+                    // Get the last id from the database and return it
+                    return eventVenue.EventVenueId;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+
+            return 0;
+        }
+
 
 
         // GET: EventVenues/Edit/5

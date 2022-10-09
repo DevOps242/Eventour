@@ -9,6 +9,8 @@ using COMP2084_Project_Eventour.Data;
 using COMP2084_Project_Eventour.Models;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using System.Data;
+using System.Drawing;
 
 namespace COMP2084_Project_Eventour.Controllers
 {
@@ -162,11 +164,19 @@ namespace COMP2084_Project_Eventour.Controllers
             }
 
             var @event = await _context.Events.FindAsync(id);
+            @event.EventDetail = await _context.EventDetails.FindAsync(@event.EventDetailId);
+            @event.EventDetail.EventVenue = await _context.EventVenues.FindAsync(@event.EventDetail.EventVenueId);
+
             if (@event == null)
             {
                 return NotFound();
             }
-            ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId", @event.EventDetailId);
+
+
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
+
+
+            //ViewData["EventDetailId"] = new SelectList(_context.EventDetails, "EventDetailId", "EventDetailId", @event.EventDetailId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", @event.UserId);
             return View(@event);
         }
@@ -176,7 +186,7 @@ namespace COMP2084_Project_Eventour.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,Title,Description,EventDetailId,UserId,createdOn")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("EventId,Title,Description,EventDetailId,UserId")] Event @event, IFormFile? Photo, string? CurrentPhoto)
         {
             if (id != @event.EventId)
             {
@@ -187,6 +197,71 @@ namespace COMP2084_Project_Eventour.Controllers
             {
                 try
                 {
+                    // Create instance of the object.
+                    EventDetail eventDetail = new EventDetail();
+                    EventVenue eventVenue = new EventVenue();
+
+                    //Get the current state from the database.
+                    eventDetail = _context.EventDetails.Find(@event.EventDetailId);
+                    eventVenue = _context.EventVenues.Find(eventDetail.EventVenueId);
+                      
+
+                    // Get the updated form info.
+                    int eventType = int.Parse(HttpContext.Request.Form["EventDetail.EventVenue.Type"]);
+                    string Address = HttpContext.Request.Form["EventDetail.EventVenue.Address"];
+                    string City = HttpContext.Request.Form["EventDetail.EventVenue.City"];
+                    string State = HttpContext.Request.Form["EventDetail.EventVenue.State"];
+                    string Country = HttpContext.Request.Form["EventDetail.EventVenue.Country"];
+                    string Zip = HttpContext.Request.Form["EventDetail.EventVenue.Zip"];
+
+                    // Create the Details into the database and return the ID.
+                    double Price = Double.Parse(HttpContext.Request.Form["EventDetail.Price"]);
+                    DateTime StartDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.StartDate"]);
+                    DateTime EndDate = DateTime.Parse(HttpContext.Request.Form["EventDetail.EndDate"]);
+
+                    int CategoryId = int.Parse(HttpContext.Request.Form["EventDetail.CategoryId"]);
+
+
+                    // Update the model variables.
+
+                    eventVenue.Type = (EventVenue.EventType)eventType;
+                    eventVenue.Address = Address;
+                    eventVenue.City = City;
+                    eventVenue.State = State;
+                    eventVenue.Country = Country;
+                    eventVenue.Zip = Zip;
+
+                    eventDetail.CategoryId = CategoryId;
+                    eventDetail.Price = Price;
+                    eventDetail.StartDate = StartDate;
+                    eventDetail.EndDate = EndDate;
+
+
+                    //Failed executing DbCommand(3ms)[Parameters =[@p6 = '?'(DbType = Int32), @p0 = '?'(Size = 4000), @p1 = '?'(DbType = Int32), @p2 = '?'(Size = 4000), @p3 = '?'(Size = 70), @p4 = '?'(DbType = Int32), @p5 = '?'(DbType = DateTime2)], CommandType = 'Text', CommandTimeout = '30']
+                    // SET NOCOUNT ON;
+                    //   UPDATE[Events] SET[Description] = @p0, [EventDetailId] = @p1, [Photo] = @p2, [Title] = @p3, [UserId] = @p4, [createdOn] = @p5
+                    //    WHERE[EventId] = @p6;
+                    //     SELECT @@ROWCOUNT;
+                    //     fail: Microsoft.EntityFrameworkCore.Update[10000]
+
+
+                    // Update the model details
+                    _context.EventVenues.Update(eventVenue);
+                    _context.EventDetails.Update(eventDetail);
+
+
+                    // Handles replacing the photo or keeping it.
+                    if (Photo != null)
+                    {
+                        var fileName = UploadPhoto(Photo);
+                        @event.Photo = fileName;
+                    }
+                    else
+                    {
+                        @event.Photo = CurrentPhoto;
+                    }
+    
+                   
                     _context.Update(@event);
                     await _context.SaveChangesAsync();
                 }
@@ -216,13 +291,14 @@ namespace COMP2084_Project_Eventour.Controllers
                 return NotFound();
             }
 
-            //var @event = await _context.Events
-            //    .Include(@ => @.EventDetail)
-            //    .Include(@ => @.User)
-            //    .FirstOrDefaultAsync(m => m.EventId == id);
-
             var @event = await _context.Events
+                .Include(item => item.EventDetail)
+                .ThenInclude(item => item.EventVenue)
+                .Include(item => item.EventDetail)
+                .ThenInclude(item => item.Category)
+                .Include(item => item.User)
                 .FirstOrDefaultAsync(m => m.EventId == id);
+
             if (@event == null)
             {
                 return NotFound();
