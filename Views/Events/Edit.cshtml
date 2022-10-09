@@ -14,8 +14,10 @@
 
         <form asp-action="Edit" enctype="multipart/form-data">
             @*Pull the user from the action token*@
+            <input type="hidden" asp-for="EventId" />
+            <input asp-for="EventDetailId" hidden  />
             <input asp-for="UserId" hidden value="1" />
-            <input asp-for="Photo" hidden value="@Model.Photo" name="CurrentPhoto" />
+            <input type="hidden" value="@Model.Photo" name="CurrentPhoto" />
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row d-flex justify-content-center mt-3">
@@ -119,7 +121,7 @@
                         <div class="form-group mb-3 mt-3">
                             @if (Model.Photo != null)
                             {
-                                <img src="assets/images/events/@Model.Photo" alt="Event Photo" width="30" height="30"/>
+                                <img src="assets/images/events/@Model.Photo" alt="Event Photo" width="30" height="30" />
                             }
                         </div>
                     </div>
