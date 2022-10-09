@@ -62,14 +62,15 @@ namespace COMP2084_Project_Eventour.Controllers
                 return NotFound();
             }
 
-            //var @event = await _context.Events
-            //    .Include(@ => @.EventDetail)
-            //    .Include(@ => @.User)
-            //    .FirstOrDefaultAsync(m => m.EventId == id);
-
             var @event = await _context.Events
+               .Include(item => item.EventDetail)
+               .ThenInclude(item => item.EventVenue)
+               .Include(item => item.EventDetail)
+               .ThenInclude(item => item.Category)
+               .Include(item => item.User)
                .FirstOrDefaultAsync(m => m.EventId == id);
 
+           
             if (@event == null)
             {
                 return NotFound();
@@ -223,7 +224,6 @@ namespace COMP2084_Project_Eventour.Controllers
 
 
                     // Update the model variables.
-
                     eventVenue.Type = (EventVenue.EventType)eventType;
                     eventVenue.Address = Address;
                     eventVenue.City = City;
@@ -235,14 +235,6 @@ namespace COMP2084_Project_Eventour.Controllers
                     eventDetail.Price = Price;
                     eventDetail.StartDate = StartDate;
                     eventDetail.EndDate = EndDate;
-
-
-                    //Failed executing DbCommand(3ms)[Parameters =[@p6 = '?'(DbType = Int32), @p0 = '?'(Size = 4000), @p1 = '?'(DbType = Int32), @p2 = '?'(Size = 4000), @p3 = '?'(Size = 70), @p4 = '?'(DbType = Int32), @p5 = '?'(DbType = DateTime2)], CommandType = 'Text', CommandTimeout = '30']
-                    // SET NOCOUNT ON;
-                    //   UPDATE[Events] SET[Description] = @p0, [EventDetailId] = @p1, [Photo] = @p2, [Title] = @p3, [UserId] = @p4, [createdOn] = @p5
-                    //    WHERE[EventId] = @p6;
-                    //     SELECT @@ROWCOUNT;
-                    //     fail: Microsoft.EntityFrameworkCore.Update[10000]
 
 
                     // Update the model details
