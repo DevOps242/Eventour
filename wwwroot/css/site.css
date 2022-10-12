@@ -92,8 +92,13 @@ footer {
     background-color: #C5CAE9;
     color: #212121;
 }
-/*Events Card END*/
 
+.event-card-time-font {
+    font-size:13px;
+    font-weight: bold;
+
+}
+/*Events Card END*/
 /*Categorys Icons Start*/
 .category_icon {
     margin-right: 5px;
@@ -135,4 +140,5 @@ footer {
     padding: 10px;
     text-align: center;
     color: #FFFFFF;
+    cursor: pointer;
 }

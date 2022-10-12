@@ -46,17 +46,26 @@
                                         Price:
                                     </span>
                                     <span>
-                                        $@Html.DisplayFor(modelItem => item.EventDetail.Price)
+                                        @Html.DisplayFor(modelItem => item.EventDetail.Price)
                                     </span>
                                  </li>
                                 <li class="list-group-item card-body-group">
-                                    <span style="font-size:15px;">
-                                        Start Time: @Html.DisplayFor(modelItem => item.EventDetail.StartDate)
-                                    </span>
-                                    <span style="font-size:15px;">
-                                        End Time: @Html.DisplayFor(modelItem => item.EventDetail.EndDate)
-                                    </span>
-                                    
+                                    <div class="text-start">
+                                        <span>
+                                            Start:
+                                        </span>
+                                        <span class="event-card-time-font">
+                                            @Html.DisplayFor(modelItem => item.EventDetail.StartDate)
+                                        </span>
+                                    </div>
+                                    <div class="text-start">
+                                        <span>
+                                            End:
+                                        </span>
+                                        <span class="event-card-time-font">
+                                            @Html.DisplayFor(modelItem => item.EventDetail.EndDate)
+                                        </span>
+                                    </div>
                                 </li>
                             </ul>
                             <div class="card-footer">

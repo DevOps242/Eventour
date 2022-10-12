@@ -29,7 +29,19 @@
                     @Html.DisplayNameFor(model => model.Color)
                 </th>
                 <th>
-                    Edit | Detail | Delete
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                Edit
+                            </div>
+                            <div class="col-5">
+                                Detail
+                            </div>
+                            <div class="col-3">
+                                Delete
+                            </div>
+                        </div>
+                    </div>   
                 </th>
             </tr>
         </thead>
@@ -50,14 +62,25 @@
                     </td>
                     <td>
                         <div class="container">
-                            <a asp-action="Edit" asp-route-id="@item.CategoryId">
-                                <i class="fa-solid fa-pen-to-square category_icon category_icon-edit"></i>
-                            </a>
-                            <a asp-action="Details" asp-route-id="@item.CategoryId"><i class="fa-solid fa-circle-info category_icon category_icon-detail"></i></a>
+                            <div class="row">
+                                <div class="col-4">
+                                    <a asp-action="Edit" asp-route-id="@item.CategoryId">
+                                        <i class="fa-solid fa-pen-to-square category_icon category_icon-edit"></i>
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <a asp-action="Details" asp-route-id="@item.CategoryId"><i class="fa-solid fa-circle-info category_icon category_icon-detail"></i></a>
+                                </div>
+                                <div class="col-4">
 
-                            <a asp-action="Delete" asp-route-id="@item.CategoryId">
-                                <i class="fa-solid fa-trash category_icon category_icon-delete"></i>
-                            </a>
+                                    <a asp-action="Delete" asp-route-id="@item.CategoryId">
+                                        <i class="fa-solid fa-trash category_icon category_icon-delete"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            
+
                         </div>
 
                     </td>

@@ -10,10 +10,13 @@ namespace COMP2084_Project_Eventour.Models
         public int EventDetailId {get; set;}
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:C}")]
         [Range(0, 10000, ErrorMessage = "Price of an event can be 0 (free) - 10,000")]
         public double Price { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
         
         [Required]

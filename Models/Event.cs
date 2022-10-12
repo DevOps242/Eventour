@@ -34,7 +34,8 @@ namespace COMP2084_Project_Eventour.Models
         public User? User { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Created")]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime createdOn { get; set; }
 
     }
