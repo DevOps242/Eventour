@@ -14,9 +14,9 @@ namespace COMP2084_Project_Eventour.Models
         [Range(0, 10000, ErrorMessage = "Price of an event can be 0 (free) - 10,000")]
         public double Price { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy hh:mm tt}", ApplyFormatInEditMode = false)]
         public DateTime StartDate { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy hh:mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy hh:mm tt}", ApplyFormatInEditMode = false)]
         public DateTime EndDate { get; set; }
         
         [Required]
