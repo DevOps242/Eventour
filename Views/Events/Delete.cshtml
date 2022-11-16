@@ -5,7 +5,7 @@
 }
 
 @if (User.Identity.IsAuthenticated)
-    {
+{
     <div class="container mb-3">
 
         <h1 class="text-center mb-3">Delete Event</h1>
@@ -63,23 +63,23 @@
                             Duration
                         </dt>
                         @if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays >= 1)
-                            {
+                        {
                             <dd class="col-sm-9">
                                 @((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays) Days
                             </dd>
-                            }
-                            else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays < 1)
-                            {
+                        }
+                        else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays < 1)
+                        {
                             <dd class="col-sm-9">
                                 @((Model.EventDetail.StartDate - Model.EventDetail.EndDate).Hours) Hours
                             </dd>
-                            }
-                            else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).Hours < 1)
-                            {
+                        }
+                        else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).Hours < 1)
+                        {
                             <dd class="col-sm-9">
                                 @((Model.EventDetail.StartDate - Model.EventDetail.EndDate).Minutes) Minutes
                             </dd>
-                            }
+                        }
 
                         <dt class="col-sm-3">
                             @Html.DisplayNameFor(model => model.EventDetail.StartDate)
@@ -163,13 +163,17 @@
                 </div>
             </div>
 
-            </br> </br>
+            <br />
+            <br />
 
         </div>
+
     </div>
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
-    </br> </br>
-    }
+    <br />
+    <br />
+}
+
 

@@ -5,7 +5,7 @@
 }
 
 @if (User.Identity.IsAuthenticated)
-    {
+{
 
     <div class="container text-center">
 
@@ -119,9 +119,9 @@
                             <div class="form-group mb-3 mt-3">
                                 Current Photo:
                                 @if (Model.Photo != null)
-                                    {
+                                {
                                     <img src="/assets/images/events/@Model.Photo" alt="Event Photo" width="150" height="130" />
-                                    }
+                                }
                             </div>
                         </div>
                     </div>
@@ -155,12 +155,13 @@
 
 
 
-    </br></br>
-    }
+    <br />
+    <br />
+}
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 }
 
 
