@@ -10,6 +10,7 @@ using COMP2084_Project_Eventour.Models;
 
 namespace COMP2084_Project_Eventour.Controllers
 {
+    
     public class EventDetailsController : Controller
     {
         private readonly ApplicationDbContext _context;

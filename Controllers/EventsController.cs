@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using System.Data;
 using System.Drawing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace COMP2084_Project_Eventour.Controllers
 {
+    [Authorize]
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,6 +26,7 @@ namespace COMP2084_Project_Eventour.Controllers
         }
 
 
+        [AllowAnonymous]
         // GET: Events
         public async Task<IActionResult> Index()
         {
@@ -54,6 +57,7 @@ namespace COMP2084_Project_Eventour.Controllers
         }
 
 
+        [AllowAnonymous]
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -156,6 +160,7 @@ namespace COMP2084_Project_Eventour.Controllers
             return View(@event);
         }
 
+        
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

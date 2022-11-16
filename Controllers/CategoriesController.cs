@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using COMP2084_Project_Eventour.Data;
 using COMP2084_Project_Eventour.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace COMP2084_Project_Eventour.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +21,7 @@ namespace COMP2084_Project_Eventour.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         // GET: Categories
         public async Task<IActionResult> Index()
         {
@@ -27,6 +30,7 @@ namespace COMP2084_Project_Eventour.Controllers
                           Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
         }
 
+        [AllowAnonymous]
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
