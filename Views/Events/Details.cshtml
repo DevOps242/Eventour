@@ -8,159 +8,163 @@
 
 
     <h1 class="text-center mb-3">Event Details</h1>
-    <div class="container d-flex justify-content-end">
-        <a asp-action="Edit" asp-route-id="@Model?.EventId"><button class="btn btn-primary">Edit</button></a>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+        {
+        <div class="container d-flex justify-content-end">
+            <a asp-action="Edit" asp-route-id="@Model?.EventId"><button class="btn btn-primary">Edit</button></a>
+        </div>
+        }
 
-    <div>
-        <hr />
-        <div class="row">
-            <div class="col-6">
-                <div class="container text-center">
-                    <div class="card bg-dark text-white" style="max-width: 400px;">
-                        @*<img src="https://mdbcdn.b-cdn.net/img/new/slides/017.webp" class="card-img" alt="Stony Beach" />*@
-                        <img src="/assets/images/events/@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Stony Beach" />
-                        <div class="card-img-overlay" style="background-color: rgba(0, 0, 0, 0.3)">
-                            <h5 class="card-title"> </h5>
-                            <p class="card-text"></p>
+        <div>
+            <hr />
+            <div class="row">
+                <div class="col-6">
+                    <div class="container text-center">
+                        <div class="card bg-dark text-white" style="max-width: 400px;">
+                            @*<img src="https://mdbcdn.b-cdn.net/img/new/slides/017.webp" class="card-img" alt="Stony Beach" />*@
+                            <img src="/assets/images/events/@Html.DisplayFor(model => model.Photo)" class="card-img" alt="Stony Beach" />
+                            <div class="card-img-overlay" style="background-color: rgba(0, 0, 0, 0.3)">
+                                <h5 class="card-title"> </h5>
+                                <p class="card-text"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-6">
+                    <h4 class="text-center mt-3 ">Event Info</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.Title)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.Title)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.Price)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.Price)
+                        </dd>
+                        <dt class="col-sm-3">
+                            Category
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.Category.Name)
+                        </dd>
+                        <dt class="col-sm-3">
+                            Duration
+                        </dt>
+                        @if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays >= 1)
+                        {
+                            <dd class="col-sm-9">
+                                @((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays) Days
+                            </dd>
+                        }
+                        else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays < 1)
+                        {
+                            <dd class="col-sm-9">
+                                @((Model.EventDetail.StartDate - Model.EventDetail.EndDate).Hours) Hours
+                            </dd>
+                        }
+                        else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).Hours < 1)
+                        {
+                            <dd class="col-sm-9">
+                                @((Model.EventDetail.StartDate - Model.EventDetail.EndDate).Minutes) Minutes
+                            </dd>
+                        }
+
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.StartDate)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.StartDate)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.EndDate)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.EndDate)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.createdOn)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.createdOn)
+                        </dd>
+                    </dl>
+
+                    <h4 class="text-center mt-3 ">Host Info</h4>
+                    <dl class="row mb-3">
+                        <dt class="col-sm-3">
+                            Host Name
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.User.FirstName)  @Html.DisplayFor(model => model.User.LastName)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.User.Email)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.User.Email)
+                        </dd>
+                    </dl>
+
+
+                    <h4 class="text-center mt-3">Location</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            Event @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Type)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.EventVenue.Type)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Address)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.EventVenue.Address)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.EventVenue.City)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.EventVenue.City)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.EventVenue.State)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.EventVenue.State)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Country)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.EventVenue.Country)
+                        </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Zip)
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.EventDetail.EventVenue.Zip)
+                        </dd>
+
+                    </dl>
+
+
+                </div>
             </div>
-            <div class="col-6">
-                <h4 class="text-center mt-3 ">Event Info</h4>
-                <dl class="row">
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.Title)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.Title)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.Description)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.Description)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.Price)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.Price)
-                    </dd>
-                    <dt class="col-sm-3">
-                        Category
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.Category.Name)
-                    </dd>
-                    <dt class="col-sm-3">
-                        Duration
-                    </dt>
-                    @if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays >= 1)
-                    {
-                        <dd class="col-sm-9">
-                            @((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays) Days
-                        </dd>
-                    }
-                    else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).TotalDays < 1)
-                    {
-                        <dd class="col-sm-9">
-                            @((Model.EventDetail.StartDate - Model.EventDetail.EndDate).Hours) Hours
-                        </dd>
-                    } else if ((Model.EventDetail.EndDate - Model.EventDetail.StartDate).Hours < 1)
-                    {
-                        <dd class="col-sm-9">
-                            @((Model.EventDetail.StartDate - Model.EventDetail.EndDate).Minutes) Minutes
-                        </dd>
-                    }
 
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.StartDate)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.StartDate)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.EndDate)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.EndDate)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.createdOn)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.createdOn)
-                    </dd>
-                </dl>
+            </br> </br>
 
-                <h4 class="text-center mt-3 ">Host Info</h4>
-                <dl class="row mb-3">
-                    <dt class="col-sm-3">
-                        Host Name
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.User.FirstName)  @Html.DisplayFor(model => model.User.LastName)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.User.Email)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.User.Email)
-                    </dd>
-                </dl>
-
-
-                <h4 class="text-center mt-3">Location</h4>
-                <dl class="row">
-                    <dt class="col-sm-3">
-                        Event @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Type)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.EventVenue.Type)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Address)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.EventVenue.Address)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.EventVenue.City)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.EventVenue.City)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.EventVenue.State)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.EventVenue.State)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Country)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.EventVenue.Country)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.EventDetail.EventVenue.Zip)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.EventDetail.EventVenue.Zip)
-                    </dd>
-
-                </dl>
-
-
-            </div>
         </div>
-
-        </br> </br>
-
     </div>
-</div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

@@ -4,150 +4,153 @@
     ViewData["Title"] = "Create Event";
 }
 
-<div class="container text-center">
+@if (User.Identity.IsAuthenticated)
+    {
+    <div class="container text-center">
 
-    <h1 class="mb-3 mt-3">Create a New Event</h1>
-    <h6 class="mb-3 mt-3">Use the below form to create your new event.</h6>
-    @*<hr />*@
-    <div class="container mb-3 mt-3 text-center">
+        <h1 class="mb-3 mt-3">Create a New Event</h1>
+        <h6 class="mb-3 mt-3">Use the below form to create your new event.</h6>
+        @*<hr />*@
+        <div class="container mb-3 mt-3 text-center">
 
-        <form asp-action="Create" enctype="multipart/form-data">
-            @*Pull the user from the action token*@
-            <input asp-for="UserId" hidden value="1" />
+            <form asp-action="Create" enctype="multipart/form-data">
+                @*Pull the user from the action token*@
+                <input asp-for="UserId" hidden value="1" />
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row d-flex justify-content-center mt-3">
-                <h6>Event Details</h6>
-                <div class="col-md-4 mt-3">
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="Title" class="control-label float-sm-start"></label>
-                        <input asp-for="Title" class="form-control" placeholder="My Amazing Event" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.Price" class="control-label float-sm-start">Price</label>
-                        <input asp-for="EventDetail.Price" class="form-control" placeholder="$100.00" />
-                        <span asp-validation-for="EventDetail.Price" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mt-3">
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.CategoryId" class="control-label float-sm-start">Category</label>
-                        <select asp-for="EventDetail.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                    </div>
-
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EventVenue.Type" class="control-label float-sm-start">Venue Type</label>
-                        <select asp-for="EventDetail.EventVenue.Type" class="form-control" >
-                            <option value=0 selected>Remote</option>
-                            <option value=1>Hybrid</option>
-                            <option value=2>In-Person</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            @*Add the venue details*@
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-4  mt-3">
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EventVenue.Address" class="control-label float-sm-start"></label>
-                        <input asp-for="EventDetail.EventVenue.Address" class="form-control" placeholder="1243 NE Ave Apt 8" />
-                        <span asp-validation-for="EventDetail.EventVenue.Zip" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EventVenue.State" class="control-label float-sm-start"></label>
-                        <input asp-for="EventDetail.EventVenue.State" class="form-control" placeholder="Florida" />
-                        <span asp-validation-for="EventDetail.EventVenue.State" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EventVenue.Zip" class="control-label float-sm-start"> ZIP | Postal</label>
-                        <input asp-for="EventDetail.EventVenue.Zip" class="form-control" placeholder="33161" />
-                        <span asp-validation-for="EventDetail.EventVenue.Zip" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-4 mt-3">
-
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EventVenue.City" class="control-label float-sm-start"></label>
-                        <input asp-for="EventDetail.EventVenue.City" class="form-control" placeholder="Miami" />
-                        <span asp-validation-for="EventDetail.EventVenue.City" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EventVenue.Country" class="control-label float-sm-start"></label>
-                        <input asp-for="EventDetail.EventVenue.Country" class="form-control" />
-                        <span asp-validation-for="EventDetail.EventVenue.Country" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-
-            @*Add the Event details*@
-
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-4">
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.StartDate" class="control-label  float-sm-start">Start Date</label>
-                        <input asp-for="EventDetail.StartDate" class="form-control" />
-                        <span asp-validation-for="EventDetail.StartDate" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="EventDetail.EndDate" class="control-label  float-sm-start">End Date</label>
-                        <input asp-for="EventDetail.EndDate" class="form-control" />
-                        <span asp-validation-for="EventDetail.EndDate" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="Photo" class="control-label  float-sm-start"></label>
-                        <input type="file" asp-for="Photo" class="form-control" />
-                        <span asp-validation-for="Photo" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row d-flex justify-content-center mt-3">
+                    <h6>Event Details</h6>
+                    <div class="col-md-4 mt-3">
                         <div class="form-group mb-3 mt-3">
-                            @*<img src="" alt="Image" width="30" height="30" />*@
+                            <label asp-for="Title" class="control-label float-sm-start"></label>
+                            <input asp-for="Title" class="form-control" placeholder="My Amazing Event" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.Price" class="control-label float-sm-start">Price</label>
+                            <input asp-for="EventDetail.Price" class="form-control" placeholder="$100.00" />
+                            <span asp-validation-for="EventDetail.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mt-3">
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.CategoryId" class="control-label float-sm-start">Category</label>
+                            <select asp-for="EventDetail.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.EventVenue.Type" class="control-label float-sm-start">Venue Type</label>
+                            <select asp-for="EventDetail.EventVenue.Type" class="form-control">
+                                <option value=0 selected>Remote</option>
+                                <option value=1>Hybrid</option>
+                                <option value=2>In-Person</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                @*Image Preview*@
+                @*Add the venue details*@
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-4  mt-3">
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.EventVenue.Address" class="control-label float-sm-start"></label>
+                            <input asp-for="EventDetail.EventVenue.Address" class="form-control" placeholder="1243 NE Ave Apt 8" />
+                            <span asp-validation-for="EventDetail.EventVenue.Zip" class="text-danger"></span>
+                        </div>
 
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.EventVenue.State" class="control-label float-sm-start"></label>
+                            <input asp-for="EventDetail.EventVenue.State" class="form-control" placeholder="Florida" />
+                            <span asp-validation-for="EventDetail.EventVenue.State" class="text-danger"></span>
+                        </div>
 
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.EventVenue.Zip" class="control-label float-sm-start"> ZIP | Postal</label>
+                            <input asp-for="EventDetail.EventVenue.Zip" class="form-control" placeholder="33161" />
+                            <span asp-validation-for="EventDetail.EventVenue.Zip" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-3">
 
-                <div class="col-md-6">
-                    <div class="form-group mb-3 mt-3">
-                        <label asp-for="Description" class="control-label float-sm-start"></label>
-                        <textarea asp-for="Description" class="form-control" cols="15" rows="6"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.EventVenue.City" class="control-label float-sm-start"></label>
+                            <input asp-for="EventDetail.EventVenue.City" class="form-control" placeholder="Miami" />
+                            <span asp-validation-for="EventDetail.EventVenue.City" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.EventVenue.Country" class="control-label float-sm-start"></label>
+                            <input asp-for="EventDetail.EventVenue.Country" class="form-control" />
+                            <span asp-validation-for="EventDetail.EventVenue.Country" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
 
-            </div>
+                @*Add the Event details*@
 
-            <div class="row d-flex justify-content-center">
-                <div class="form-group">
-                    <input type="submit" value="Create Event" class="btn btn-primary" />
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-4">
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.StartDate" class="control-label  float-sm-start">Start Date</label>
+                            <input asp-for="EventDetail.StartDate" class="form-control" />
+                            <span asp-validation-for="EventDetail.StartDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="EventDetail.EndDate" class="control-label  float-sm-start">End Date</label>
+                            <input asp-for="EventDetail.EndDate" class="form-control" />
+                            <span asp-validation-for="EventDetail.EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="Photo" class="control-label  float-sm-start"></label>
+                            <input type="file" asp-for="Photo" class="form-control" />
+                            <span asp-validation-for="Photo" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3 mt-3">
+                                @*<img src="" alt="Image" width="30" height="30" />*@
+                            </div>
+                        </div>
+                    </div>
+
+                    @*Image Preview*@
+
+
+
+                    <div class="col-md-6">
+                        <div class="form-group mb-3 mt-3">
+                            <label asp-for="Description" class="control-label float-sm-start"></label>
+                            <textarea asp-for="Description" class="form-control" cols="15" rows="6"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-        </form>
+
+                <div class="row d-flex justify-content-center">
+                    <div class="form-group">
+                        <input type="submit" value="Create Event" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
 
-</br></br>
+    </br></br>
+    }
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 
 

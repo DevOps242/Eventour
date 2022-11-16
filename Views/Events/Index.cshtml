@@ -7,10 +7,13 @@
 <div class="container mb-3">
     <h1 class="text-center">Manage Events</h1>
     <div class="container mb-3 mt-3 d-flex justify-content-end">
-        <a asp-action="Create">
-            <button class="btn btn-primary">Create New </button>
-        </a>
-    </div>
+        @if (User.Identity.IsAuthenticated)
+         {
+            <a asp-action="Create">
+                <button class="btn btn-primary">Create New </button>
+            </a>
+         }
+        </div>
 
 
     <div class="container mb-3">
@@ -69,13 +72,23 @@
                                 </li>
                             </ul>
                             <div class="card-footer">
-                                <a asp-action="Edit" asp-route-id="@item.EventId" class="btn btn-primary">Edit</a>
-                                <a asp-action="Details" asp-route-id="@item.EventId" class="btn btn-secondary">Read More</a>
-                                <a asp-action="Delete" asp-route-id="@item.EventId" class="btn btn-danger">Delete</a>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.EventId" class="btn btn-primary">Edit</a>
+
+                                    <a asp-action="Details" asp-route-id="@item.EventId" class="btn btn-secondary">Read More</a>
+                                    <a asp-action="Delete" asp-route-id="@item.EventId" class="btn btn-danger">Delete</a>
+                                }
+                                else
+                                {
+                                    <center>
+                                        <a asp-action="Details" asp-route-id="@item.EventId" class="btn btn-secondary">Read More</a>
+                                    </center>   
+                                }
                             </div>
                         </div>
                     </div>
-                 }
+                    }
             }
         </div>
     </div>

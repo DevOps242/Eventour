@@ -4,49 +4,51 @@
     ViewData["Title"] = "Create Category";
 }
 
-<div class="text-center">
-    <h1 class="mb-3 mt-3">Create a Category</h1>
+@if (User.Identity.IsAuthenticated)
+    {
+    <div class="text-center">
+        <h1 class="mb-3 mt-3">Create a Category</h1>
 
-    <h6>Use the below form to create your event's categories.</h6>
-    <div class="container mb-3 mt-3 text-center">
-        <form asp-action="Create">
-            <div class="row d-flex justify-content-center">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="col-md-6">
-                    <div class="container">
-                        <div class="form-group mb-3 mt-3">
-                            <label asp-for="Name" class="control-label float-sm-start"></label>
-                            <input asp-for="Name" class="form-control" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
+        <h6>Use the below form to create your event's categories.</h6>
+        <div class="container mb-3 mt-3 text-center">
+            <form asp-action="Create">
+                <div class="row d-flex justify-content-center">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-md-6">
+                        <div class="container">
+                            <div class="form-group mb-3 mt-3">
+                                <label asp-for="Name" class="control-label float-sm-start"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group mb-3 mt-3">
+                                <label asp-for="Description" class="control-label float-sm-start"></label>
+                                <textarea asp-for="Description" class="form-control" cols="20" rows="5"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group mb-3 mt-3">
+                                <label asp-for="Color" class="control-label float-sm-start"></label>
+                                <input asp-for="Color" class="form-control" type="color" />
+                                <span asp-validation-for="Color" class="text-danger"></span>
+                            </div>
                         </div>
 
-
                         <div class="form-group mb-3 mt-3">
-                            <label asp-for="Description" class="control-label float-sm-start"></label>
-                            <textarea asp-for="Description" class="form-control" cols="20" rows="5"></textarea>
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <input type="submit" value="Add Category" class="btn btn-primary" />
                         </div>
-
-                        <div class="form-group mb-3 mt-3">
-                            <label asp-for="Color" class="control-label float-sm-start"></label>
-                            <input asp-for="Color" class="form-control" type="color"/>
-                            <span asp-validation-for="Color" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group mb-3 mt-3">
-                        <input type="submit" value="Add Category" class="btn btn-primary" />
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    }
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
