@@ -30,8 +30,9 @@ builder.Services.AddAuthentication()
     })
     .AddFacebook(options =>
     {
-        options.ClientId = builder.Configuration["Authentication:Facebook:ClientId"];
-        options.ClientSecret = builder.Configuration["Authentication:Facebook:ClientSecret"];
+        options.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+        options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+        options.AccessDeniedPath = "/AccessDeniedPathInfo";
     });
 
 
