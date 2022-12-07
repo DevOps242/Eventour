@@ -1,0 +1,3 @@
+[submodule "Eventour/COMP2084_Project_Eventour"]
+	path = Eventour/COMP2084_Project_Eventour
+	url = https://github.com/DevOps242/Eventour.git
