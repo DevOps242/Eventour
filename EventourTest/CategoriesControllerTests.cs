@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Net.NetworkInformation;
 using System.Runtime.Intrinsics.X86;
 using COMP2084_Project_Eventour.Controllers;
 using COMP2084_Project_Eventour.Data;
 using COMP2084_Project_Eventour.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
@@ -14,6 +16,7 @@ public class CategoriesControllerTests
 {
     private ApplicationDbContext context;
     CategoriesController categoryController;
+    private RedirectToActionResult result;
 
 
     #region "InMemory Database Initialize"
@@ -127,41 +130,75 @@ public class CategoriesControllerTests
     #region "Create Tests"
 
     [TestMethod]
-    public void CreateLoadsView()
+    public void GetCreateLoadsView()
     {
         // Act
         var result = (ViewResult)categoryController.Create();
 
-        // Arrange
+        // Assert
         Assert.AreEqual("Create", result.ViewName);
     }
 
     [TestMethod]
-    public void Create()
+    public void PostCreateCategoryValidReturnsIndex()
     {
+        var model = new Category { CategoryId = 1010, Name = "Category 1010",  Color = "#", Description = "Category - 1010 Description" };
+        
+        // Act
+        var result = (RedirectToActionResult)categoryController.Create(model).Result;
 
+        // Assert
+        Assert.AreEqual("Index", result.ActionName);
+    }
+
+    [TestMethod]
+    public void PostCreateCategoryInvalidReturnsCreateView()
+    {
+        var model = new Category { CategoryId = 1010, Name = "Category - 1010", Color = "#" };
+        categoryController.ModelState.AddModelError("Form", "Invalid Form");
+
+        // Act
+        var result = (ViewResult)categoryController.Create(model).Result;
+
+        // Assert
+        Assert.AreEqual("Create", result.ViewName);
+    }
+
+    // Come back here.
+
+    [TestMethod]
+    public void PostCreateCategoryNullNameReturnsError()
+    {
+        // Arrange
+        var model = new Category { CategoryId = 1010, Color = "#", Description = "Category - 1010 Description" };
+        categoryController.ModelState.AddModelError("Name", "Name can't be empty");
+
+        // Act
+        var result = categoryController.Create(model).Result;
+
+        // Assert
+        Assert.IsTrue(categoryController.ModelState["Name"].Errors.Count > 0);
     }
 
 
+    [TestMethod]
+    public void PostCreateCategoryNullDescriptionReturnsError()
+    {
+        // Arrange
+        var model = new Category { CategoryId = 1010, Name = "Category - 1010", Color = "#" };
+        categoryController.ModelState.AddModelError("Description", "Description can't be empty");
 
+        // Act
+        var result = (ViewResult)categoryController.Create(model).Result;
 
-    //Use controller.ModelState.AddModelError("put a descriptive key name here", "add an appropriate key value here");
-    //to test any parts of methods that handle errors in the model validation(the CREATE and EDIT POST methods).
+        // Assert
+        //Assert.IsTrue(categoryController.ModelState["Description"].Errors.Count > 0);
+        Assert.AreEqual(categoryController.ModelState["Description"].Errors.ToString, result.ExecuteResultAsync);
+    }
 
+    
 
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Create([Bind("CategoryId,Name,Description,Color")] Category category)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        _context.Add(category);
-    //        await _context.SaveChangesAsync();
-    //        return RedirectToAction(nameof(Index));
-    //    }
-    //    return View(category);
-    //}
-
-
+    //    //Use controller.ModelState.AddModelError("put a descriptive key name here", "add an appropriate key value here");
+    //    //to test any parts of methods that handle errors in the model validation(the CREATE and EDIT POST methods).
     #endregion
 }
