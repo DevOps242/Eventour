@@ -1,15 +1,8 @@
-bin/*
-obj/*
-.vs/
-globs
-Makefile.in
-*.userprefs
-*.usertasks
-config.make
-config.status
-aclocal.m4
-install-sh
-autom4te.cache/
-*.tar.gz
 .DS_Store
-.config
+COMP2084_Project_Eventour/ "COMP2084_Project_Eventour\\wwwroot\\assets\\Images\\events\\8bbe64e1-af85-4a77-9be2-f8af998e68bc-Database-Schema.jpeg 
+COMP2084_Project_Eventour\\wwwroot\\assets\\Images\\events\\d9b00b8d-e802-4240-9b9f-36cf13ef4509-P3-Assignment1-Computer.jpeg.jpeg 
+COMP2084_Project_Eventour\\wwwroot\\assets\\images\\events\\261332c0-de08-425f-8d09-9b8d82d77357-P3-Assignment1-Computer.jpeg.jpeg
+COMP2084_Project_Eventour\\wwwroot\\assets\\images\\events\\7dffd9dc-20f4-4f5d-bd99-213f48bf0e46-Database-Schema.jpeg
+COMP2084_Project_Eventour\\wwwroot\\assets\\Images\\events\\8bbe64e1-af85-4a77-9be2-f8af998e68bc-Database-Schema.jpeg
+EventourTest/bin/
+EventourTest/obj/

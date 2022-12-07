@@ -1,0 +1,19 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = https://github.com/DevOps242/Eventour
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[submodule "Eventour/COMP2084_Project_Eventour"]
+	url = https://github.com/DevOps242/Eventour.git
+	active = true
+[branch "tests"]
+	remote = origin
+	merge = refs/heads/tests

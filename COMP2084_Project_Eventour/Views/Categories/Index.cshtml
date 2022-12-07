@@ -1,0 +1,113 @@
+@model IEnumerable<COMP2084_Project_Eventour.Models.Category>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="container text-center">
+
+    <h1 class="mb-3">View All Categories</h1>
+
+    @if (User.Identity.IsAuthenticated)
+        {
+        <div class="container d-flex justify-content-end mb-3 mt-3">
+            <a asp-action="Create">
+                <button class="btn btn-primary">
+                    Create New
+                </button>
+            </a>
+        </div>
+        }
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Color)
+                    </th>
+                    <th>
+                        <div class="container">
+                            <div class="row">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="col-4">
+                                        Edit
+                                    </div>
+                                    <div class="col-5">
+                                        Detail
+                                    </div>
+                                    <div class="col-3">
+                                        Delete
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-5">
+                                        Detail
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            <span class="badge rounded-pill bg-light text-dark" style="border: 3px solid @Html.DisplayFor(modelItem => item.Color);">
+                                @Html.DisplayFor(modelItem => item.Color)
+                            </span>
+                        </td>
+                        <td>
+                            <div class="container">
+                                <div class="row">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="col-4">
+                                            <a asp-action="Edit" asp-route-id="@item.CategoryId">
+                                                <i class="fa-solid fa-pen-to-square category_icon category_icon-edit"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a asp-action="Details" asp-route-id="@item.CategoryId"><i class="fa-solid fa-circle-info category_icon category_icon-detail"></i></a>
+                                        </div>
+                                        <div class="col-4">
+
+                                            <a asp-action="Delete" asp-route-id="@item.CategoryId">
+                                                <i class="fa-solid fa-trash category_icon category_icon-delete"></i>
+                                            </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-4">
+                                            <a asp-action="Details" asp-route-id="@item.CategoryId"><i class="fa-solid fa-circle-info category_icon category_icon-detail"></i></a>
+                                        </div>
+                                    }
+                                </div>
+
+
+
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>

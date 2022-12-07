@@ -1,0 +1,144 @@
+﻿/*All theme Start*/
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+ 
+}
+
+h1 {
+    color: #212121;
+}
+
+a {
+    text-decoration: none;
+    color: #303F9F !important;
+}
+
+.btn {
+    color: #FFFFFF !important;
+}
+
+.btn-primary {
+    background-color: #303F9F !important;
+}
+
+.btn-primary:hover {
+    opacity: .80;
+}
+
+footer {
+    background-color: #C5CAE9;
+    color: #212121 !important;
+}
+/*All theme End*/
+
+/*
+#303F9F - Dark Primary color
+#C5CAE9 - Light Primary Color
+#3F51B5 - Priamry color
+#FFFFFF - text / icons
+#607D8B - Accent Color
+#212121 - Primary Text
+#757575 - Secondary Text
+#BDBDBD - Divder Color
+*/
+
+
+/*Nav Bar Start*/
+.navbar {
+    background-color: #303F9F !important;
+}
+
+.nav-link {
+    color: #FFFFFF !important;
+}
+
+.nav-link:hover {
+    color: #212121 !important;
+}
+
+.navbar-brand {
+    color: #FFFFFF !important;
+}
+/*Nav Bar End*/
+
+/*Events Card START*/
+.card-img-top {
+    height: 215px
+}
+
+.card {
+    border: 1px solid;
+    padding: 2px;
+    box-shadow: 5px 10px #607D8B;
+    background-color: #FFFFFF;
+    color: #303F9F;
+}
+.card-body-group {
+    background-color: #C5CAE9;
+    color: #212121;
+}
+
+.event-card-time-font {
+    font-size:13px;
+    font-weight: bold;
+
+}
+/*Events Card END*/
+/*Categorys Icons Start*/
+.category_icon {
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.category_icon:hover {
+    opacity: .70;
+}
+.category_icon-edit {
+}
+
+.category_icon-detail {
+    color: #607D8B;
+}
+.category_icon-delete {
+    color: red;
+}
+
+/*Categorys Icons END*/
+
+/*Home Page Browse Section*/
+.category-cols {
+    background-image: linear-gradient(to right, #303F9F, #607D8B);
+    opacity: .9;
+    margin: 7px;
+    padding: 10px;
+    text-align: center;
+    color: #FFFFFF;
+    box-shadow: 5px 3px #607D8B;
+    background-color: #FFFFFF;
+}
+
+.category-cols:hover {
+    background-image: linear-gradient(to left, #607D8B, #C5CAE9);
+    margin: 7px;
+    padding: 10px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
