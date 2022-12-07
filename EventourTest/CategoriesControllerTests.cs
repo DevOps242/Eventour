@@ -19,6 +19,9 @@ public class CategoriesControllerTests
     private RedirectToActionResult result;
 
 
+    //    //Use controller.ModelState.AddModelError("put a descriptive key name here", "add an appropriate key value here");
+    //    //to test any parts of methods that handle errors in the model validation(the CREATE and EDIT POST methods).
+
     #region "InMemory Database Initialize"
     [TestInitialize]
     public void TestInitalize()
@@ -89,7 +92,7 @@ public class CategoriesControllerTests
     {
         context.Categories = null;
         // Act
-        var result = (ViewResult)categoryController.Details(null).Result;
+        var result = (ViewResult)categoryController.Details(1003).Result;
 
         // Assert
         Assert.AreEqual("404", result.ViewName);
@@ -125,7 +128,6 @@ public class CategoriesControllerTests
         Assert.AreEqual(context.Categories.Find(1001), result.Model);
     }
     #endregion
-
 
     #region "Create Tests"
 
@@ -178,7 +180,7 @@ public class CategoriesControllerTests
 
         // Assert
         //Assert.IsTrue(categoryController.ModelState["Name"].Errors.Count > 0);
-        Assert.AreEqual(categoryController.ModelState["Name"].Errors.ToString, result.ToString);
+        Assert.AreEqual("Name can't be empty", categoryController.ModelState["Name"].Errors[0].ErrorMessage);
     }
 
 
@@ -194,12 +196,9 @@ public class CategoriesControllerTests
 
         // Assert
         //Assert.IsTrue(categoryController.ModelState["Description"].Errors.Count > 0);
-        Assert.AreEqual(categoryController.ModelState["Description"].Errors.ToString, result.ExecuteResultAsync);
+        Assert.AreEqual("Description can't be empty", categoryController.ModelState["Description"].Errors[0].ErrorMessage);
     }
     #endregion
-
-    //    //Use controller.ModelState.AddModelError("put a descriptive key name here", "add an appropriate key value here");
-    //    //to test any parts of methods that handle errors in the model validation(the CREATE and EDIT POST methods).
 
     #region "Edit Tests"
 
@@ -216,9 +215,11 @@ public class CategoriesControllerTests
     [TestMethod]
     public void GetEditNoCategoryTableLoads404()
     {
+        // Arrange
         context.Categories = null;
+
         // Act
-        var result = (ViewResult)categoryController.Edit(null).Result;
+        var result = (ViewResult)categoryController.Edit(1003).Result;
 
         // Assert
         Assert.AreEqual("404", result.ViewName);
@@ -257,7 +258,9 @@ public class CategoriesControllerTests
     [TestMethod]
     public void PostEditInvalidIDReturn404()
     {
+        // Arrange
         var model = context.Categories.Find(1003);
+        model.Name = "Editing Name";
 
         // Act
         var result = (ViewResult)categoryController.Edit(1004, model).Result;
@@ -269,6 +272,9 @@ public class CategoriesControllerTests
     [TestMethod]
     public void PostEditNotFoundIDReturn404()
     {
+        // Arrange
+        var model = context.Categories.Find(10000);
+
         // Act
         var result = (ViewResult)categoryController.Edit(100000).Result;
 
@@ -279,6 +285,7 @@ public class CategoriesControllerTests
     [TestMethod]
     public void PostEditCategoryValidReturnsIndex()
     {
+        // Arrange
         var model = context.Categories.Find(1003);
 
         model.Name = "Editing Name";
@@ -295,6 +302,7 @@ public class CategoriesControllerTests
     [TestMethod]
     public void PostEditCategoryInvalidReturnsEditView()
     {
+        // Arrange
         var model = context.Categories.Find(1003);
 
         model.Name = null;
@@ -310,8 +318,6 @@ public class CategoriesControllerTests
         Assert.AreEqual("Edit", result.ViewName);
     }
 
-    //// Come back here.
-
     [TestMethod]
     public void PostEditCategoryNullNameReturnsError()
     {
@@ -324,8 +330,7 @@ public class CategoriesControllerTests
         var result = (ViewResult)categoryController.Edit(1004, model).Result;
 
         // Assert
-        //Assert.IsTrue(categoryController.ModelState["Name"].Errors.Count > 0);
-        Assert.AreEqual(categoryController.ModelState["Name"].Errors.ToString, result.ToString);
+        Assert.AreEqual("Name can't be empty", categoryController.ModelState["Name"].Errors[0].ErrorMessage);
     }
 
 
@@ -342,59 +347,108 @@ public class CategoriesControllerTests
 
         // Assert
         //Assert.IsTrue(categoryController.ModelState["Description"].Errors.Count > 0);
-        Assert.AreEqual(categoryController.ModelState["Description"].Errors.ToString, "Description can't be empty");
+        Assert.AreEqual("Description can't be empty", categoryController.ModelState["Description"].Errors[0].ErrorMessage);
     }
     #endregion
 
-
     #region "Delete Tests"
 
-    //    // GET: Categories/Delete/5
-    //    public async Task<IActionResult> Delete(int? id)
-    //    {
-    //        if (id == null || _context.Categories == null)
-    //        {
-    //            return NotFound();
-    //        }
+    [TestMethod]
+    public void GetDeleteNoIdLoads404()
+    {
+        // Act
+        var result = (ViewResult)categoryController.Delete(null).Result;
 
-    //        var category = await _context.Categories
-    //            .FirstOrDefaultAsync(m => m.CategoryId == id);
-    //        if (category == null)
-    //        {
-    //            return NotFound();
-    //        }
+        // Assert
+        Assert.AreEqual("404", result.ViewName);
+    }
 
-    //        return View(category);
-    //    }
+    [TestMethod]
+    public void GetDeleteNoCategoryTableLoads404()
+    {
+        // Arrange
+        context.Categories = null;
 
-    //    // POST: Categories/Delete/5
-    //    [HttpPost, ActionName("Delete")]
-    //    [ValidateAntiForgeryToken]
-    //    public async Task<IActionResult> DeleteConfirmed(int id)
-    //    {
-    //        if (_context.Categories == null)
-    //        {
-    //            return Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
-    //        }
-    //        var category = await _context.Categories.FindAsync(id);
-    //        if (category != null)
-    //        {
-    //            _context.Categories.Remove(category);
-    //        }
+        // Act
+        var result = (ViewResult)categoryController.Delete(1003).Result;
 
-    //        await _context.SaveChangesAsync();
-    //        return RedirectToAction(nameof(Index));
-    //    }
+        // Assert
+        Assert.AreEqual("404", result.ViewName);
+    }
 
-    //    private bool CategoryExists(int id)
-    //    {
-    //        return (_context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
-    //    }
-    //}
+    [TestMethod]
+    public void GetDeleteInvalidIdLoads404()
+    {
+        // Act
+        var result = (ViewResult)categoryController.Delete(500).Result;
+
+        // Assert
+        Assert.AreEqual("404", result.ViewName);
+    }
+
+    [TestMethod]
+    public void GetDeleteIsValidLoadsView()
+    {
+        // Act
+        var result = (ViewResult)categoryController.Delete(1001).Result;
+
+        // Assert
+        Assert.AreEqual("Delete", result.ViewName);
+    }
+
+    [TestMethod]
+    public void GetDeleteIsValidLoadsCategory()
+    {
+        // Act
+        var result = (ViewResult)categoryController.Delete(1001).Result;
+
+        // Assert
+        Assert.AreEqual(context.Categories.Find(1001), result.Model);
+    }
+
+    [TestMethod]
+    public void PostDeleteNullContextIDReturn404()
+    {
+        // Arrange
+        context.Categories = null;
+
+        // Act
+        var result = (ViewResult)categoryController.DeleteConfirmed(1003).Result;
+
+        // Assert
+        Assert.AreEqual("404", result.ViewName);
+    }
+
+    [TestMethod]
+    public void PostDeleteCategoryValidReturnsIndex()
+    {
+        // Act
+        var result = (RedirectToActionResult)categoryController.DeleteConfirmed(1002).Result;
+
+        // Assert
+        Assert.AreEqual("Index", result.ActionName);
+    }
+
+    [TestMethod]
+    public void PostDeleteCategoryValidRemovesCategory()
+    {
+        // Act
+        var result = (RedirectToActionResult)categoryController.DeleteConfirmed(1003).Result;
+        var model = context.Categories.Find(1003);
+
+        // Assert
+        Assert.AreEqual(model, null);
+    }
+
+    [TestMethod]
+    public void PostDeleteNotFoundIDReturnIndex()
+    {
+        // Act
+        var result = (RedirectToActionResult)categoryController.DeleteConfirmed(100000).Result;
+
+        // Assert
+        Assert.AreEqual("Index", result.ActionName);
+    }
     #endregion
-
-
-
-
 
 }
