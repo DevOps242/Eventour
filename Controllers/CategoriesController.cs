@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using COMP2084_Project_Eventour.Data;
 using COMP2084_Project_Eventour.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace COMP2084_Project_Eventour.Controllers
 {
@@ -36,7 +37,7 @@ namespace COMP2084_Project_Eventour.Controllers
         {
             if (id == null || _context.Categories == null)
             {
-                //return NotFound("404");
+                //return NotFound();
                 return View("404");
             }
 
@@ -70,7 +71,8 @@ namespace COMP2084_Project_Eventour.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+
+            return View("Create", category);
         }
 
         // GET: Categories/Edit/5
@@ -78,15 +80,17 @@ namespace COMP2084_Project_Eventour.Controllers
         {
             if (id == null || _context.Categories == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("404");
             }
 
             var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("404");
             }
-            return View(category);
+            return View("Edit", category);
         }
 
         // POST: Categories/Edit/5
@@ -98,7 +102,8 @@ namespace COMP2084_Project_Eventour.Controllers
         {
             if (id != category.CategoryId)
             {
-                return NotFound();
+                //return NotFound();
+                return View("404");
             }
 
             if (ModelState.IsValid)
@@ -112,7 +117,8 @@ namespace COMP2084_Project_Eventour.Controllers
                 {
                     if (!CategoryExists(category.CategoryId))
                     {
-                        return NotFound();
+                        //return NotFound();
+                         return View("404");
                     }
                     else
                     {
@@ -121,7 +127,7 @@ namespace COMP2084_Project_Eventour.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View("Edit", category);
         }
 
         // GET: Categories/Delete/5
@@ -129,17 +135,19 @@ namespace COMP2084_Project_Eventour.Controllers
         {
             if (id == null || _context.Categories == null)
             {
-                return NotFound();
+                return View("404");
+                //return NotFound();
             }
 
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
-                return NotFound();
+                return View("404");
+                //return NotFound();
             }
 
-            return View(category);
+            return View("Delete", category);
         }
 
         // POST: Categories/Delete/5
@@ -149,7 +157,8 @@ namespace COMP2084_Project_Eventour.Controllers
         {
             if (_context.Categories == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
+                Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
+                return View("404");
             }
             var category = await _context.Categories.FindAsync(id);
             if (category != null)
