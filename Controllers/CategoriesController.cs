@@ -26,7 +26,7 @@ namespace COMP2084_Project_Eventour.Controllers
         public async Task<IActionResult> Index()
         {
               return _context.Categories != null ? 
-                          View(await _context.Categories.ToListAsync()) :
+                          View("Index", await _context.Categories.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
         }
 
@@ -36,23 +36,25 @@ namespace COMP2084_Project_Eventour.Controllers
         {
             if (id == null || _context.Categories == null)
             {
-                return NotFound();
+                //return NotFound("404");
+                return View("404");
             }
 
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("404");
             }
 
-            return View(category);
+            return View("Details", category);
         }
 
         // GET: Categories/Create
         public IActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         // POST: Categories/Create
