@@ -12,3 +12,4 @@ install-sh
 autom4te.cache/
 *.tar.gz
 .DS_Store
+.config
