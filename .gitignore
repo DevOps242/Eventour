@@ -1,3 +1,13 @@
+COMP2084_Project_Eventour/globs
+COMP2084_Project_Eventour/Makefile.in
+COMP2084_Project_Eventour/*.userprefs
+COMP2084_Project_Eventour/*.usertasks
+COMP2084_Project_Eventour/config.make
+COMP2084_Project_Eventour/config.status
+COMP2084_Project_Eventour/aclocal.m4
+COMP2084_Project_Eventour/install-sh
+COMP2084_Project_Eventour/autom4te.cache/
+COMP2084_Project_Eventour/*.tar.gz
 .DS_Store
 COMP2084_Project_Eventour/ "COMP2084_Project_Eventour\\wwwroot\\assets\\Images\\events\\8bbe64e1-af85-4a77-9be2-f8af998e68bc-Database-Schema.jpeg 
 COMP2084_Project_Eventour\\wwwroot\\assets\\Images\\events\\d9b00b8d-e802-4240-9b9f-36cf13ef4509-P3-Assignment1-Computer.jpeg.jpeg 
