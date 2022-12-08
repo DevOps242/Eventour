@@ -50,7 +50,4 @@
     <Content Remove="wwwroot\assets\" />
     <Content Remove="wwwroot\assets\images %28copy%29\events\placeholder.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="README.md" />
-  </ItemGroup>
 </Project>
