@@ -18,12 +18,8 @@
 
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore.InMemory" />
-    <None Remove="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\COMP2084_Project_Eventour\COMP2084_Project_Eventour.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="README.md" />
   </ItemGroup>
 </Project>
